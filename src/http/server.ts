@@ -55,7 +55,7 @@ app.post("/api/trialconvo", (req, res) => {
         return res.status(429).json({"message":"Trial Expiry Placeholder"})
     }
 
-    completeConversation(convoId, req.body.message).then((response) => {
+    completeConversation("Trial User", convoId, req.body.message).then((response) => {
        
         let current = MessageCounts.get(convoId)
         MessageCounts.set(convoId, current+1)

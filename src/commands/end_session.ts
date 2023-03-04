@@ -1,5 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder,  } from "discord.js";
-import { CCache, Sessions } from "../ai/cache.js";
+import { CCache, CIDCache, Sessions } from "../ai/cache.js";
 
 export default function(i: CommandInteraction) {
         if (!Sessions.has(i.user.id)) {
@@ -8,9 +8,18 @@ export default function(i: CommandInteraction) {
             })
         }
 
+        const convoId = CIDCache.get(i.user.id)
+
+        CIDCache.forEach((id, user) => {
+            if(id == convoId) {
+                Sessions.delete(user)
+                CIDCache.delete(user)
+            }
+        });
+
         // Stop listening to messages
-        Sessions.delete(i.user.id)
-        CCache.delete(i.user.id)
+        
+        CCache.delete(convoId)
 
         i.reply({
             "content": "Ended your session. Hope I was able to help!",

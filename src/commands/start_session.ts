@@ -1,5 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder,  } from "discord.js";
-import { CCache, Sessions } from "../ai/cache.js";
+import { CCache, CIDCache, Sessions, SPCache } from "../ai/cache.js";
 
 export default function(i: CommandInteraction) {
         if (Sessions.has(i.user.id)) {
@@ -9,7 +9,14 @@ export default function(i: CommandInteraction) {
         }
 
         // Start listening to messages
+
+        const convoId = (Math.random() * 100).toString(16)
+
+        console.log("cid:", convoId)
+
         Sessions.add(i.user.id)
+        CIDCache.set(i.user.id, convoId)
+        SPCache.set(convoId, "Therapist")
 
         i.reply({
             "content": "Started a new session! MindMedic will now start listening to your messages.",

@@ -1,10 +1,12 @@
 import { CommandInteraction, SlashCommandBuilder,  } from "discord.js";
-import { CCache } from "../ai/cache.js";
+import { CCache, CIDCache } from "../ai/cache.js";
 
 export default function(i: CommandInteraction) {
-        CCache.delete(i.user.id)
+        const convoId = CIDCache.get(i.user.id)
+
+        CCache.delete(convoId)
         i.reply({
-            "content": "Cleared your conversation history!",
+            "content": "Cleared conversation history!",
             "ephemeral": true
         })
 }

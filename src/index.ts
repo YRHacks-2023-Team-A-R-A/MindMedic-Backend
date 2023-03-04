@@ -26,4 +26,4 @@ client.login(process.env.TOKEN)
 
 process.on('uncaughtException', function (err) {
     console.error(`Unexpected Error:`, err);
-  });
+});

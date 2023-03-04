@@ -17,7 +17,7 @@ export default function(message: Message): void {
 
     console.log(`got: ${message.content}`)
 
-    completeConversation(message.author.id, message.content).then((response) => {
+    completeConversation(message.author.username, message.author.id, message.content).then((response) => {
         message.reply(response)
     })    
 }
