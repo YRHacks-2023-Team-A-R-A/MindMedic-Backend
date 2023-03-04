@@ -1,5 +1,5 @@
-import { Events, Message } from "discord.js"
-import { Sessions } from "../ai/cache.js"
+import { CategoryChannel, Channel, Events, ForumChannel, Message, PartialGroupDMChannel, StageChannel } from "discord.js"
+import { CIDCache, Sessions, TIDCache } from "../ai/cache.js"
 import { completeConversation } from "../ai/openai.js"
 
 
@@ -15,9 +15,14 @@ export default function(message: Message): void {
         return
     }
 
-    console.log(`got: ${message.content}`)
+    if (message.channel.isThread() || message.channel.isDMBased()) {
+        let convoId = message.channel.isDMBased() ? CIDCache.get(message.author.id) : TIDCache.get(message.channel.id)
 
-    completeConversation(message.author.username, message.author.id, message.content).then((response) => {
-        message.reply(response)
-    })    
+        if (convoId == undefined) return
+
+        completeConversation(message.author.username, message.author.id, message.content).then((response) => {
+            message.reply(response)
+        })
+        message.channel.sendTyping()
+    }
 }

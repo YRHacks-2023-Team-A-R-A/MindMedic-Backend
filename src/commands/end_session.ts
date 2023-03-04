@@ -1,5 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder,  } from "discord.js";
-import { CCache, CIDCache, Sessions } from "../ai/cache.js";
+import { CCache, CIDCache, Sessions, TIDCache } from "../ai/cache.js";
 
 export default function(i: CommandInteraction) {
         if (!Sessions.has(i.user.id)) {
@@ -16,6 +16,11 @@ export default function(i: CommandInteraction) {
                 CIDCache.delete(user)
             }
         });
+
+        if(i.channel.isThread()) {
+            i.channel.setLocked(true)
+            TIDCache.delete(i.channel.id)
+        }
 
         // Stop listening to messages
         
