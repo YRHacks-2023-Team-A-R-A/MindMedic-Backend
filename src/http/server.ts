@@ -1,5 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser";
+import cors from "cors"
 import { Sessions } from "../ai/cache.js";
 import { completeConversation } from "../ai/openai.js";
 import message from "../events/message";
@@ -7,6 +8,7 @@ import message from "../events/message";
 const app = express()
 
 app.use(bodyParser.json())
+app.use(cors())
 
 // Limit trial conversations to 5 messages
 const MessageCounts = new Map<string,number>()
@@ -59,8 +61,6 @@ app.post("/api/trialconvo", (req, res) => {
        
         let current = MessageCounts.get(convoId)
         MessageCounts.set(convoId, current+1)
-
-        res.setHeader("Access-Control-Allow-Origin", "*")
 
         return res.status(200).json({"message":response})
     })
