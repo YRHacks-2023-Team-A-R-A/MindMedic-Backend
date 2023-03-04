@@ -1,10 +1,9 @@
 import { ActivityType, Client, IntentsBitField, Partials, Routes, SlashCommandBuilder } from "discord.js";
 import "dotenv/config"
-import { readdirSync } from "fs"
-import { completeConversation } from "./ai/openai.js";
-import { Commands } from "./commands/mod.js";
-
 import { Events } from "./events/mod.js"
+import "./http/server.js"
+
+
 
 
 // Load Env Variables
