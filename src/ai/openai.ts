@@ -68,8 +68,6 @@ export async function completeConversation(name: string, userid: string, message
                 model: "gpt-3.5-turbo",
                 messages
             }).then((res) => {
-                console.log(res.data)
-    
                 let responseMessage;
     
                 if (res.status != 200) {

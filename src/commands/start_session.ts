@@ -8,12 +8,10 @@ export default function(i: CommandInteraction) {
             })
         }
 
-        // Start listening to messages
-
+       
         const convoId = (Math.random() * 100).toString(16)
 
-        console.log("cid:", convoId)
-
+         // Start listening to messages
         Sessions.add(i.user.id)
         CIDCache.set(i.user.id, convoId)
         SPCache.set(convoId, "Therapist")
