@@ -4,4 +4,5 @@ import InteractionCreate from "./interactionCreate.js"
 export const Events = {
     "messageCreate": MessageCreate,
     "interactionCreate": InteractionCreate,
+    
 }
