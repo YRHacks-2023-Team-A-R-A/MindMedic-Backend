@@ -1,7 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser";
 import cors from "cors"
-import { Sessions } from "../ai/cache.js";
+import { Sessions, SPCache } from "../ai/cache.js";
 import { completeConversation } from "../ai/openai.js";
 import message from "../events/message";
 
@@ -56,6 +56,8 @@ app.post("/api/trialconvo", (req, res) => {
     if (MessageCounts.get(convoId) >= 5) {
         return res.status(429).json({"message":"Trial Expiry Placeholder"})
     }
+
+    SPCache.set(convoId, "Therapist")
 
     completeConversation("Trial User", convoId, req.body.message).then((response) => {
        
