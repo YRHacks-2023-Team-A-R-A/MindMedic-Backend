@@ -18,6 +18,13 @@ const client = new Client({
     }
 })
 
+client.on("guildCreate", guild => {
+    console.log(
+      `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
+    );
+    message.channel.send("**Hi! Thanks for adding me to your server!** Say: ```/start-session``` to start a session, ```/add-user``` to add someone to it, ```/end-session``` to end it & ```/leave-session``` to leave a session you've been added to! **I can also be contacted through DM’s! **");
+});
+
 Object.keys(Events).forEach((event) => {
     client.on(event, Events[event])
 })
