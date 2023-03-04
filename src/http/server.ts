@@ -1,7 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser";
 import cors from "cors"
-import { Sessions, SPCache } from "../ai/cache.js";
+import { CIDCache, Sessions, SPCache } from "../ai/cache.js";
 import { completeConversation } from "../ai/openai.js";
 import message from "../events/message";
 
@@ -57,6 +57,7 @@ app.post("/api/trialconvo", (req, res) => {
         return res.status(429).json({"message":"Trial Expiry Placeholder"})
     }
 
+    CIDCache.set(convoId, convoId)
     SPCache.set(convoId, "Therapist")
 
     completeConversation("Trial User", convoId, req.body.message).then((response) => {
