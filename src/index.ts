@@ -18,11 +18,6 @@ const client = new Client({
     }
 })
 
-client.on("guildCreate", guild => {
-    console.log(
-      `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-});
-
 Object.keys(Events).forEach((event) => {
     client.on(event, Events[event])
 })
