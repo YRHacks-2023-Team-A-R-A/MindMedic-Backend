@@ -1,8 +1,6 @@
 import { OpenAIApi, Configuration, ChatCompletionRequestMessage } from "openai";
 import { CCache } from "./cache.js";
 
-console.log("key", process.env.OPENAI_KEY)
-
 const config = new Configuration({
     "apiKey": process.env.OPENAI_KEY
 })
@@ -35,29 +33,39 @@ export async function completeConversation(userid: string, message: string) {
             {"role":"user", "content": message}
         ]
 
-        openai.createChatCompletion({
-            model: "gpt-3.5-turbo",
-            messages
-        }).then((res) => {
-            console.log(res.data)
-
-            res.status
-
-            const responseMessage = res.data.choices[0].message
-
-            convo.push({"role":"user", "content":message})
-            convo.push({"role":"assistant", "content":responseMessage.content})
-
-
-            // Only store last 50 messages for cost reasons
-            if (convo.length > 50) {
-                convo.slice(convo.length - 50, convo.length)
-            }
-
-            CCache.set(userid, convo)
-
-            resolve(responseMessage.content)
-        })
+        try {
+            openai.createChatCompletion({
+                model: "gpt-3.5-turbo",
+                messages
+            }).then((res) => {
+                console.log(res.data)
+    
+                let responseMessage;
+    
+                if (res.status != 200) {
+                    responseMessage = `There was an error generating a response: ${res.statusText}`
+                } else {
+                    responseMessage = res.data.choices[0].message
+                }
+    
+                
+    
+                convo.push({"role":"user", "content":message})
+                convo.push({"role":"assistant", "content":responseMessage.content})
+    
+    
+                // Only store last 50 messages for cost reasons
+                if (convo.length > 50) {
+                    convo.slice(convo.length - 50, convo.length)
+                }
+    
+                CCache.set(userid, convo)
+    
+                resolve(responseMessage.content)
+            })
+        } catch(err) {
+            resolve("There was an error generating a response")
+        }
         
     })
 }

@@ -4,7 +4,6 @@ import { completeConversation } from "../ai/openai.js"
 
 
 export default function(message: Message): void {
-    console.log(message.content)
     if (message.author.bot) return
     // Only allow dms
     if (message.inGuild()) return
