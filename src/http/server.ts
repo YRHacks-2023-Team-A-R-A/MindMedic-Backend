@@ -60,6 +60,8 @@ app.post("/api/trialconvo", (req, res) => {
         let current = MessageCounts.get(convoId)
         MessageCounts.set(convoId, current+1)
 
+        res.setHeader("Access-Control-Allow-Origin", "*")
+
         return res.status(200).json({"message":response})
     })
 });
