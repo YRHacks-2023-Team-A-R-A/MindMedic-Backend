@@ -1,0 +1,30 @@
+{
+  "name": "mindmedic-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsc && cd dist && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YRHacks-2023-Team-A-R-A/MindMedic-Backend.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YRHacks-2023-Team-A-R-A/MindMedic-Backend/issues"
+  },
+  "homepage": "https://github.com/YRHacks-2023-Team-A-R-A/MindMedic-Backend#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}
